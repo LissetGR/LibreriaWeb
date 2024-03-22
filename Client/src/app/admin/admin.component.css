@@ -1,0 +1,23 @@
+form  span{
+  margin: 8px;
+}
+
+
+form{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+form input{
+  height: 38px;
+}
+
+button{
+  height: 35px;
+}
+
+.flex{
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,790 @@
+<app-header></app-header>
+<p-toast
+  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+></p-toast>
+
+<div class="card" style="display: flex; justify-content: center">
+  <p-tabMenu
+    [scrollable]="true"
+    [model]="items"
+    [(activeItem)]="activeItem"
+    [style]="{ width: '100%' }"
+  ></p-tabMenu>
+</div>
+
+<!-- <div  *ngIf="activeItem.label == 'Clientes'">
+    <div class="card">
+      <p-table
+          #dt1
+          dataKey="id"
+          [value]="clientes"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10, 25, 50]"
+          [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          >
+          <ng-template pTemplate="caption" >
+              <div class="flex"  >
+                  <button pButton pRipple label="Agregar cliente" class="p-button-primary"  (click)="valor = 'client'" (click)="metodo = 'crear'"   (click)="sidebarVisible = true" icon="pi pi-plus"></button>
+                  <span class="p-input-icon-left ml-auto" style="margin-right: 30px;">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text"  placeholder="Buscar" />
+                  </span>
+                  <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" ></button>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                  <th style="min-width:10rem; background-color:#114C5F ;color: white;">
+                      <div class="flex align-items-center">
+                        Usuario
+                          <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                      </div>
+                  </th>
+                  <th style="min-width:15rem; background-color:#114C5F ;color: white;">
+                      <div class="flex align-items-center">
+                          Nombre
+                          <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                      </div>
+                  </th>
+                  <th style="min-width:15rem;background-color:#114C5F;color: white;">
+                      <div class="flex align-items-center">
+                          Apellidos
+                          <p-columnFilter type="text" field="Apellidos" display="menu"></p-columnFilter>
+                      </div>
+                  </th>
+                  <th style="min-width:15rem;background-color:#114C5F;color: white;">
+                      <div class="flex align-items-center">
+                          Direccion
+                          <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                              <ng-template pTemplate="header">
+                                  <div class="px-3 pt-3 pb-0">
+                                      <span class="font-bold">Agent Picker</span>
+                                  </div>
+                              </ng-template>
+                              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                  <p-multiSelect [ngModel]="value" placeholder="Any"  optionLabel="name">
+                                      <ng-template let-option pTemplate="item">
+                                          <div class="inline-block vertical-align-middle">
+                                              <span class="ml-1 mt-1">{{ option.name }}</span>
+                                          </div>
+                                      </ng-template>
+                                  </p-multiSelect>
+                              </ng-template>
+                          </p-columnFilter>
+                      </div>
+                  </th>
+                  <th style="min-width:10rem;background-color:#114C5F;color: white;">
+                      <div class="flex align-items-center">
+                          Telefono
+                          <p-columnFilter type="text" field="Telefono" display="menu"></p-columnFilter>
+                      </div>
+                  </th>
+                  <th style="min-width:10rem;background-color:#114C5F;color: white;">
+                      <div class="flex align-items-center">
+                          Tipo de persona
+                          <p-columnFilter type="text" field="tipo_persona" display="menu"></p-columnFilter>
+                      </div>
+                  </th>
+                  <th style="min-width:10rem;background-color:#114C5F;color: white;">
+                      <div class="flex align-items-center">
+                          Es turistica
+                          <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                              <ng-template pTemplate="filter" let-filter="filterCallback">
+                                  <p-slider [range]="true"  styleClass="m-3"></p-slider>
+                                  <div class="flex align-items-center px-2">
+                                      <span>0</span>
+                                      <span>1</span>
+                                  </div>
+                              </ng-template>
+                          </p-columnFilter>
+                      </div>
+                  </th>
+                  <th style="min-width:10rem;background-color:#114C5F;color: white;">
+                    <div class="flex align-items-center">
+                      Opciones
+                    </div>
+                  </th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-cliente>
+              <tr>
+                  <td>
+                      {{cliente.username}}
+                  </td>
+                  <td>
+                      {{cliente.nombre}}
+                  </td>
+                  <td>
+                      <span class="ml-1 vertical-align-middle">{{cliente.apellidos}}</span>
+                  </td>
+                  <td>
+                      <span class="ml-1 vertical-align-middle">{{cliente.direccion}}</span>
+                  </td>
+                  <td>
+                      {{cliente.telefono}}
+                  </td>
+                  <td>
+                    {{cliente.tipo_persona}}
+                  </td>
+                  <td>
+                    {{cliente.persona_turistica}}
+                  </td>
+                  <td>
+                    <p-button (click)="sidebarVisible = true" (click)="valor = 'client'" (click)="metodo = 'modificar'" icon="pi pi-user-edit" [style]="{'height': '30px', 'width': '30px', 'margin-right':'20px'}"></p-button>
+                    <p-button (click)="confirm2($event)" icon="pi pi-times" [style]="{'height': '30px', 'width': '30px'}" severity="danger"></p-button>
+                  </td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="6">No hay clientes registrados</td>
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+
+
+<div class="card flex justify-content-center gap-2">
+  <p-toast></p-toast>
+  <p-confirmPopup></p-confirmPopup>
+</div> -->
+
+<!-- </div> -->
+<div *ngIf="activeItem.label == 'Libros'">
+  <div class="card">
+    <p-table
+      #dt1
+      dataKey="id"
+      [value]="libros"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="[
+        'name',
+        'country.name',
+        'representative.name',
+        'status'
+      ]"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            label="Agregar libro"
+            (click)="
+              valor = 'libro';
+              metodo = 'crear';
+              sidebarVisible = true;
+              clearData()
+            "
+            class="p-button-primary"
+            icon="pi pi-plus"
+            style="height: 35px"
+          ></button>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search" style="margin-top: -8px"></i>
+            <input
+              pInputText
+              type="text"
+              placeholder="Buscar"
+              style="margin-right: 30px; height: 35px"
+              [(ngModel)]="busqueda"
+              (keypress)="buscarLibros()"
+            />
+            <button
+              pButton
+              label="Limpiar"
+              class="p-button-outlined"
+              icon="pi pi-filter-slash"
+              (click)="limpiarBusqueda()"
+            ></button>
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="min-width: 15rem; background-color: #114c5f; color: white">
+            <div class="flex align-items-center">
+              Titulo
+              <p-columnFilter
+                type="text"
+                field="name"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 15rem; background-color: #114c5f; color: white">
+            <div class="flex align-items-center">
+              Autor
+              <p-columnFilter
+                type="text"
+                field="Autor"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="background-color: #114c5f; color: white; width: 5rem">
+            <div class="flex align-items-center">
+              Tema
+              <p-columnFilter
+                field="representative"
+                matchMode="in"
+                display="menu"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              >
+                <ng-template pTemplate="header">
+                  <div class="px-3 pt-3 pb-0">
+                    <span class="font-bold">Agent Picker</span>
+                  </div>
+                </ng-template>
+                <ng-template
+                  pTemplate="filter"
+                  let-value
+                  let-filter="filterCallback"
+                >
+                  <p-multiSelect
+                    [ngModel]="value"
+                    placeholder="Any"
+                    optionLabel="name"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <div class="inline-block vertical-align-middle">
+                        <span class="ml-1 mt-1">{{ option.name }}</span>
+                      </div>
+                    </ng-template>
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 10rem; background-color: #114c5f; color: white">
+            <div class="flex align-items-center">
+              ISBN
+              <p-columnFilter
+                type="text"
+                field="Telefono"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 10rem; background-color: #114c5f; color: white">
+            <div class="flex align-items-center">
+              Editorial
+              <p-columnFilter
+                type="text"
+                field="tipo_persona"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="background-color: #114c5f; color: white; width: 5rem">
+            <div class="flex align-items-center">
+              Tipo
+              <p-columnFilter
+                field="activity"
+                matchMode="between"
+                display="menu"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              >
+                <ng-template pTemplate="filter" let-filter="filterCallback">
+                  <p-slider [range]="true" styleClass="m-3"></p-slider>
+                  <div class="flex align-items-center px-2">
+                    <span>0</span>
+                    <span>1</span>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </div>
+          </th>
+          <th style="background-color: #114c5f; color: white; width: 5rem">
+            <div class="flex align-items-center">
+              Cantidad
+              <p-columnFilter
+                type="text"
+                field="Telefono"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="background-color: #114c5f; color: white; width: 5rem">
+            <div class="flex align-items-center">
+              Precio
+              <p-columnFilter
+                type="text"
+                field="Telefono"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 10rem; background-color: #114c5f; color: white">
+            <div class="flex align-items-center">Opciones</div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-libro>
+        <tr>
+          <td>
+            {{ libro.titulo }}
+          </td>
+          <td>
+            <span class="ml-1 vertical-align-middle">{{ libro.autor }}</span>
+          </td>
+          <td>
+            <span class="ml-1 vertical-align-middle">{{ libro.tema }}</span>
+          </td>
+          <td>
+            {{ libro.ISBN }}
+          </td>
+          <td>
+            {{ libro.editorial }}
+          </td>
+          <td style="text-align: center">
+            {{ libro.tipo }}
+          </td>
+          <td style="text-align: center">
+            {{ libro.cantidad }}
+          </td>
+          <td style="text-align: center">
+            {{ libro.precio }}
+          </td>
+          <td style="text-align: center">
+            <p-button
+              (click)="
+                sidebarVisible = true;
+                metodo = 'modificar';
+                valor = 'libro';
+                UpdateData(libro)
+              "
+              icon="pi pi-user-edit"
+              [style]="{
+                height: '30px',
+                width: '30px',
+                'margin-right': '20px'
+              }"
+            ></p-button>
+            <p-button
+              (click)="currentEventType = 'book';confirm2($event, libro.id)"
+              icon="pi pi-times"
+              [style]="{ height: '30px', width: '30px' }"
+              severity="danger"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">No hay clientes registrados</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="card flex justify-content-center gap-2">
+    <p-toast></p-toast>
+    <p-confirmPopup></p-confirmPopup>
+  </div>
+</div>
+<div>
+  <div *ngIf="activeItem.label == 'Usuarios'">
+    <div class="card">
+      <p-table
+        #dt1
+        dataKey="id"
+        [value]="usuarios"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="[
+          'name',
+          'country.name',
+          'representative.name',
+          'status'
+        ]"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <button
+              pButton
+              pRipple
+              label="Agregar usuario"
+              (click)="metodo = 'crear'"
+              class="p-button-primary"
+              (click)="valor = 'user'"
+              (click)="sidebarVisible = true;
+              clearDataUser()"
+              icon="pi pi-plus"
+            ></button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search" style="margin-top: -8px"></i>
+              <input
+                pInputText
+                type="text"
+                placeholder="Buscar"
+                style="margin-right: 30px; height: 35px"
+              />
+              <button
+                pButton
+                label="Limpiar"
+                class="p-button-outlined"
+                icon="pi pi-filter-slash"
+              ></button>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th
+              style="min-width: 15rem; background-color: #114c5f; color: white"
+            >
+              <div class="flex align-items-center">
+                Username
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th
+              style="min-width: 15rem; background-color: #114c5f; color: white"
+            >
+              <div
+                class="flex align-items-center"
+                style="justify-content: center"
+              >
+                Rol que ocupa
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th
+              style="min-width: 10rem; background-color: #114c5f; color: white"
+            >
+              <div class="flex align-items-center">Opciones</div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+          <tr>
+            <td>
+              {{ usuario.name }}
+            </td>
+            <td>
+              <div class="card flex justify-content-center">
+                <div class="flex flex-wrap gap-3">
+                  <div
+                    class="flex align-items-center"
+                    style="margin-right: 40px"
+                  >
+                    <p-radioButton
+                      name="Role{{ usuario.id }}"
+                      value="Cliente"
+                      [(ngModel)]="rol"
+                      inputId="rol{{ usuario.id }}"
+                    ></p-radioButton>
+                    <label for="rol1" class="ml-2">Cliente</label>
+                  </div>
+
+                  <div
+                    class="flex align-items-center"
+                    style="margin-right: 40px"
+                  >
+                    <p-radioButton
+                      name="Role{{ usuario.id }}"
+                      value="Dependiente"
+                      [(ngModel)]="rol"
+                      inputId="rol{{ usuario.id }}"
+                    ></p-radioButton>
+                    <label for="rol2" class="ml-2">Dependiente</label>
+                  </div>
+
+                  <div
+                    class="flex align-items-center"
+                    style="margin-right: 40px"
+                  >
+                    <p-radioButton
+                      name="Role{{ usuario.id }}"
+                      value="Admin"
+                      [(ngModel)]="rol"
+                      inputId="rol"
+                    ></p-radioButton>
+                    <label for="rol3" class="ml-2">Admin</label>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td style="text-align: center">
+              <p-button
+                (click)="sidebarVisible = true;
+                          valor = 'user';
+                          metodo = 'modificar';
+                          UpdateDataUser(usuario)"
+                icon="pi pi-user-edit"
+                [style]="{
+                  height: '30px',
+                  width: '30px',
+                  'margin-right': '20px'
+                }"
+              ></p-button>
+              <p-button
+                (click)="currentEventType = 'user';confirm2($event, usuario.id);"
+                icon="pi pi-times"
+                [style]="{ height: '30px', width: '30px' }"
+                severity="danger"
+              ></p-button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">No hay clientes registrados</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <!-- Side bar -->
+  <div class="card flex justify-content-center">
+    <p-sidebar
+      [(visible)]="sidebarVisible"
+      [style]="{
+        width: '20rem',
+        'background-image': 'url(\'./../../assets/fondo9.jpg\')',
+        'background-size': 'cover'
+      }"
+    >
+      <div *ngIf="valor == 'libro'">
+        <div *ngIf="metodo == 'modificar'; else Agregar">
+          <!-- <h3 style="text-align: center;margin-bottom: 10px;">Modifique sus datos</h3> -->
+          <form action="modificar" [formGroup]="libro" ngSubmit="onSubmit()">
+            <span class="p-float-label" style="margin-top: 10px">
+              <input pInputText id="titulo" formControlName="titulo" />
+              <label for="titulo">Titulo del libro</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="autor" formControlName="autor" />
+              <label for="autor">Autor</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="tema" formControlName="tema" />
+              <label for="tema">Tema</label>
+            </span>
+            <span class="p-float-label">
+              <textarea
+                rows="1"
+                cols="25"
+                pInputTextarea
+                formControlName="descripcion"
+                [autoResize]="true"
+              ></textarea>
+              <label for="descripcion">Descripcion</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="ISBN" formControlName="ISBN" />
+              <label for="ISBN">ISBN</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="editorial" formControlName="editorial" />
+              <label for="editorial">Editorial</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="Tipo" formControlName="tipo" />
+              <label for="Tipo">Tipo</label>
+            </span>
+            <span class="p-float-label">
+              <p-inputNumber inputId="integeronly" formControlName="precio">
+              </p-inputNumber>
+              <label for="number-input">Precio</label>
+            </span>
+            <span>
+              <p-inputNumber
+                [size]="9"
+                formControlName="cantidad"
+                [min]="0"
+                [max]="100"
+                [showButtons]="true"
+                buttonLayout="horizontal"
+                inputId="horizontal"
+                spinnerMode="vertical"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              ></p-inputNumber>
+            </span>
+            <button
+              pButton
+              pRipple
+              label="Modificar"
+              class="p-button-success"
+              (click)="modificarLibro()"
+            ></button>
+          </form>
+        </div>
+        <ng-template #Agregar>
+          <form action="agregar" [formGroup]="libro" ngSubmit="onSubmit()">
+            <!-- <h3 style="text-align: center;margin-bottom: 10px;">Inserte sus datos</h3> -->
+            <span class="p-float-label" style="margin-top: 10px">
+              <input pInputText id="titulo" formControlName="titulo" />
+              <label for="titulo">Titulo del libro</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="autor" formControlName="autor" />
+              <label for="autor">Autor</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="tema" formControlName="tema" />
+              <label for="tema">Tema</label>
+            </span>
+            <span class="p-float-label">
+              <textarea
+                rows="1"
+                cols="25"
+                pInputTextarea
+                formControlName="descripcion"
+                [autoResize]="true"
+              ></textarea>
+              <label for="descripcion">Descripcion</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="ISBN" formControlName="ISBN" />
+              <label for="ISBN">ISBN</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="editorial" formControlName="editorial" />
+              <label for="editorial">Editorial</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="Tipo" formControlName="tipo" />
+              <label for="Tipo">Tipo</label>
+            </span>
+            <span class="p-float-label">
+              <p-inputNumber inputId="integeronly" formControlName="precio">
+              </p-inputNumber>
+              <label for="number-input">Precio</label>
+            </span>
+            <span>
+              <p-inputNumber
+                [size]="9"
+                [min]="0"
+                [showButtons]="true"
+                buttonLayout="horizontal"
+                inputId="horizontal"
+                spinnerMode="vertical"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+                formControlName="cantidad"
+              ></p-inputNumber>
+            </span>
+            <button
+              pButton
+              pRipple
+              label="Agregar"
+              class="p-button-success"
+              (click)="crearLibro()"
+            ></button>
+          </form>
+        </ng-template>
+      </div>
+      <div *ngIf="valor == 'user'">
+        <div *ngIf="metodo == 'modificar'; else Agregar">
+          <h3 style="text-align: center; margin-bottom: 30px">
+            Modifique sus datos
+          </h3>
+          <form action="modificar" [formGroup]="user">
+            <span class="p-float-label" style="margin-bottom: 30px;">
+              <input pInputText id="username" formControlName="name" />
+              <label for="username">Username</label>
+            </span>
+            <!-- <span class="p-float-label">
+              <p-password
+                [feedback]="false"
+                name="contrasenna"
+                formControlName="password"
+                autocomplete="contrasenna"
+                [style]="{ height: '40px' }"
+              ></p-password>
+              <label for="password">Password</label>
+            </span>
+            <span class="p-float-label">
+              <p-password
+                [feedback]="false"
+                name="contrasenna"
+                formControlName="password_confirmation"
+                autocomplete="contrasenna"
+                [style]="{ height: '40px' }"
+              ></p-password>
+              <label for="password">Repita Password </label>
+            </span> -->
+            <button
+              pButton
+              pRipple
+              label="Modificar"
+              class="p-button-success"
+              (click)="modificarUser()"
+            ></button>
+          </form>
+        </div>
+        <ng-template #Agregar>
+          <form action="agregar" [formGroup]="user">
+            <h3 style="text-align: center; margin-bottom: 30px">
+              Inserte sus datos
+            </h3>
+            <span class="p-float-label">
+              <input pInputText id="username" formControlName="name" />
+              <label for="username">Username</label>
+            </span>
+            <span class="p-float-label">
+              <p-password
+                [feedback]="false"
+                name="contrasenna"
+                formControlName="password"
+                autocomplete="contrasenna"
+              ></p-password>
+              <label for="password">Password</label>
+            </span>
+            <span class="p-float-label">
+              <p-password
+                [feedback]="false"
+                name="contrasenna"
+                formControlName="password_confirmation"
+                autocomplete="contrasenna"
+                [style]="{ height: '40px' }"
+              ></p-password>
+              <label for="password">Repita Password</label>
+            </span>
+            <button
+              pButton
+              pRipple
+              label="Agregar"
+              class="p-button-success"
+              (click)="crearUser()"
+            ></button>
+          </form>
+        </ng-template>
+      </div>
+    </p-sidebar>
+  </div>
+
+  <div class="card flex justify-content-center gap-2">
+    <p-toast></p-toast>
+    <p-confirmPopup></p-confirmPopup>
+  </div>
+</div>

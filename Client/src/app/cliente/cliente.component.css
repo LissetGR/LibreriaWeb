@@ -1,0 +1,214 @@
+.buscar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  /* height: 15rem; */
+  /* background-color: #e6621f; */
+  background-color: #f2aa1f;
+  /* background-color: #accc7b; */
+  /* background-color: #cd966c; */
+  /* background-image: url('./../../assets/banner.jpg');
+  background-size: cover; */
+}
+
+.custom-autocomplete{
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.contenido{
+  margin-top: 45px;
+  display: flex;
+  width: 100%;
+}
+.recomendaciones{
+  width: 30%;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  padding-right: 2rem;
+  border-right: 1px solid gray;
+}
+.libros{
+  width: 70%;
+}
+
+.info{
+  height:5rem;
+  width: 15rem;
+}
+
+.container{
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  border-top: 1px solid gray;
+}
+
+.container .data{
+  margin: 10px;
+  position: relative;
+  cursor: pointer;
+  -webkit-box-shadow: 5px 5px 19px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 5px 5px 19px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 19px 0px rgba(0,0,0,0.75);
+}
+
+.container .data .face{
+  width: 120px;
+  height: 150px;
+  transition: 0.5s;
+}
+
+.container .data .face.face1{
+  /* background-image: url('./../../assets/recom.jpg'); */
+  /* background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; */
+  /* transform: translateY(10px); */
+  height: 8rem;
+  width: 3rem;
+}
+
+
+
+.container .data .face.face1 .content{
+  text-align: end;
+  transition: 0.5s;
+}
+
+.container .data:hover .face.face1 .content{
+  opacity: 0;
+}
+
+
+.container .data .face.face1 .content h3{
+  margin: 10px 0 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.container .data .face.face2{
+  position: relative;
+  background: #fff;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+
+}
+/*
+.container .data:hover .face.face2{
+  transform: translateY(-100px);
+} */
+
+.container .data .face.face2 .content p{
+  font-size: 15px;
+}
+
+
+/* ribbon */
+
+/* .box {
+  width: 200px; height: 300px;
+  position: relative;
+  border: 1px solid #BBB;
+  background: #EEE;
+} */
+.ribbon {
+  position: absolute;
+  right: -5px; top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px; height: 75px;
+  text-align: right;
+}
+.ribbon span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  width: 100px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 19px; right: -21px;
+}
+.ribbon span::before {
+  content: "";
+  position: absolute; left: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid #79A70A;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #79A70A;
+}
+.ribbon span::after {
+  content: "";
+  position: absolute; right: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #79A70A;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #79A70A;
+}
+
+
+.agotados {
+  position: absolute;
+  right: -5px; top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px; height: 75px;
+  text-align: right;
+}
+.agotados span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  width: 100px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#F70505 0%, #8F0808 100%);
+  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 19px; right: -21px;
+}
+.agotados span::before {
+  content: "";
+  position: absolute; left: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid #8F0808;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8F0808;
+}
+.agotados span::after {
+  content: "";
+  position: absolute; right: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #8F0808;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8F0808;
+}

@@ -1,0 +1,93 @@
+<app-header ></app-header>
+<section>
+    <div class="card flex justify-content-center buscar" >
+      <p-autoComplete [(ngModel)]="selectedItem"   (keypress)="buscarLibros()"   placeholder="Buscar por titulo, autor o ISBN"  [inputStyle]="{'width': '25VW', 'height':'35px', '-webkit-border-radius': '15px','-moz-border-radius': '15px','border-radius': '15px','font-size':'15px'}"></p-autoComplete>
+    </div>
+    <div class="card flex contenido ">
+        <div class="recomendaciones">
+            <h3>Recomendaciones:</h3>
+            <div class="container">
+              <div class="data"   *ngFor="let item of recomendados; let i=index">
+                <div class="" >
+                    <img style="height: 10rem;width: 7.4rem;"  src="./../../assets/{{item.url}}" >
+                    <div  class="ribbon" *ngIf="i==0"><span>POPULAR</span></div>
+                    <div  class="agotados" *ngIf="item.cantidad==0"><span>Agotados</span></div>
+                 </div>
+                  <div class="face face2">
+                      <div class="content">
+                          <p style="font-size: 12px;text-align: center;">{{ item.autor }}</p>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- aqui comienzan a mostrarse los libros -->
+        <div class="libros">
+          <!-- <div class="box">
+            <div class="ribbon"><span>POPULAR</span></div>
+         </div> -->
+              <p-dataView  [value]="products"  [layout]="layout" >
+                <ng-template pTemplate="header">
+                    <div class="flex justify-content-end" style="align-content: center;" >
+                      <h3 style="font-size: 25PX;margin:auto;">Libros en oferta:</h3>
+                      <p-dataViewLayoutOptions [layout]="layout" [style]="{'margin': 'auto'}" ></p-dataViewLayoutOptions>
+                    </div>
+                </ng-template>
+                <ng-template let-item pTemplate="listItem">
+                      <div class="grid grid-nogutter">
+                        <div class="col-12 ">
+                            <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4" style="width:62rem;height: 14rem;">
+                                <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" style="height: 11rem;width: 1rem;" src="./../../assets/{{ item.url }}" />
+                                <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                                    <div class="flex flex-column align-items-center sm:align-items-start gap-3" style="width:20rem">
+                                        <div class="text-2xl font-bold text-900">{{item.titulo }}</div>
+                                        <span class="font-semibold">{{ item.tema}}</span>
+                                        <div class="flex align-items-center gap-3">
+                                            <span class="flex align-items-center gap-2">
+                                                <i class="pi pi-pencil" ></i>
+                                                <span class="font-semibold">{{ item.autor}}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                      <p>{{ item.descripcion }}</p>
+                                    </div>
+                                    <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                                        <span class="text-2xl font-semibold">${{ item.precio}}</span>
+                                        <button pButton icon="pi pi-shopping-cart"  class="md:align-self-end mb-2 p-button-rounded"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </ng-template>
+                <ng-template let-item pTemplate="gridItem">
+                  <div class=" grid grid-nogutter" >
+                    <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2"  style="width: 12rem;" >
+                        <div class="p-4 border-1 surface-border surface-card border-round" style="height: 17.5rem;">
+                            <div class="flex flex-wrap align-items-center justify-content-between gap-2 " style="height: 20PX;">
+                                <span class="flex align-items-center gap-2" style="margin-top: -10px;height: 20px;">
+                                    <i style="font-size: 10px;" class="pi pi-pencil"></i>
+                                    <span class="font-semibold" style="font-size: 13px;text-align: center;">{{ item.autor}}</span>
+                                </span>
+                            </div>
+                            <div class="flex flex-column align-items-center gap-3 py-5"  style="margin-top: -20px; height: 15rem;">
+                                <img class="w-9 shadow-2 border-round"  style="height:8rem;"  src="./../../../assets/{{item.url}}"  />
+                                <div class=" font-bold" style="font-size: 15px;text-align: center; height: 60px;">{{ item.titulo }}</div>
+
+                            </div>
+                            <div class="flex align-items-center justify-content-between" style="margin-top: -20px; height: 20px;">
+                                <span class="font-semibold" style="font-size: 13px;">${{ item.precio}}</span>
+                                <button pButton icon="pi pi-shopping-cart" style="height: 30px;width: 30px;" class="p-button-rounded" ></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+      </div>
+
+
+</section>

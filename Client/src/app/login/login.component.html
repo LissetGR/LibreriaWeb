@@ -1,0 +1,47 @@
+<div class="fondo">
+    <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+    <img class="logo" src="./../../assets/Zeus.png" alt="">
+    <div class="container">
+        <div class="login">
+          <div class="datos">
+            <h3>Inserte sus datos </h3>
+            <form action="pass" [formGroup]="user" ngSubmit="onSubmit()">
+              <div class="usuario">
+                  <span class="p-float-label">
+                    <input pInputText id="username"  name="username" autocomplete="username" formControlName="name"/>
+                    <label htmlFor="username">Usuario</label>
+                  </span>
+              </div>
+
+                <div class="card flex justify-content-center password">
+                    <span class="p-float-label">
+                        <p-password [feedback]="false"name="contrasenna"  autocomplete="contrasenna"  formControlName="password"></p-password>
+                        <label for="password">Password</label>
+                    </span>
+                </div>
+
+                <div *ngIf="login; else crearCuenta"></div>
+                <ng-template #crearCuenta>
+                  <div class="password card flex justify-content-center">
+                    <span class="p-float-label">
+                      <p-password [feedback]="false"  autocomplete="confirmarContrasenna"  formControlName="password_confirmation"></p-password>
+                      <label for="password" >Confirmar contraseña</label>
+                    </span>
+                  </div>
+                </ng-template>
+
+                <div *ngIf="login; else botonCrear" class="entrar">
+                  <button pButton pRipple label="Iniciar" class="p-button-success"  (click)="logear()"></button>
+                  <h5><a (click)="login = !login">Crear cuenta</a></h5>
+                </div>
+                <ng-template #botonCrear>
+                  <span class="entrar">
+                    <button pButton pRipple label="Crear cuenta" class="p-button-success"   (click)="registrarse()" ></button>
+                    <img height="40px"  src="./../../assets/atras.png"  (click)="login = !login">
+                  </span>
+                </ng-template>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>

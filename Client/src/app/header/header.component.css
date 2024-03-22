@@ -1,0 +1,33 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  height: 4.5rem;
+  width: 100%;
+  -webkit-box-shadow: 0px 9px 12px -3px rgba(255,255,255,0.56);
+  -moz-box-shadow: 0px 9px 12px -3px rgba(255,255,255,0.56);
+  box-shadow: 0px 9px 12px -3px rgba(255,255,255,0.56);
+
+}
+.logo{
+  margin-left: 30px;
+  cursor: pointer;
+  height: 6rem;
+  margin-top: -10px;
+}
+.usuario{
+  display: flex;
+  margin-right: 50px;
+  align-items: center;
+  width: fit-content;
+  justify-content: space-between;
+}
+.usuario h3{
+  color: white;
+}
+.usuario img{
+  cursor: pointer;
+  margin-left: 20px;
+  height: 35px;
+  width: 30px;
+}

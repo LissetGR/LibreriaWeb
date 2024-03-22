@@ -1,0 +1,181 @@
+<!--
+  <div class="card"  style="display: flex;justify-content: center;">
+    <p-tabMenu [scrollable]="true" [model]="items" [activeItem]="activeItem" [style]="{'width': '100%'}"></p-tabMenu>
+  </div> -->
+  <app-header ></app-header>
+  <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
+ <div>
+      <div class="encabezado">
+        <h3 style="height: 2.5rem;text-align: center; font-size: 23px;position: absolute;">Registro de ventas</h3>
+        <img src="./../../assets/papelrosado.png" alt="">
+      </div>
+      <div class="card">
+        <p-table
+            #dt1
+            dataKey="id"
+            [value]="ventas"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+            >
+            <ng-template pTemplate="caption" >
+                <div class="flex"  >
+                    <button pButton pRipple label="Agregar venta" class="p-button-primary" icon="pi pi-plus" (click)="valor = 'agregar';sidebarVisible = true; clearData()"></button>
+                    <span class="p-input-icon-left ml-auto" style="margin-right: 30PX;display: flex;">
+                        <i class="pi pi-search" style="margin-top: -8px;"></i>
+                        <input pInputText type="text"  placeholder="Buscar" style="height: 35px;"/>
+                    </span>
+                    <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" ></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width:15rem; background-color:#114C5F ;color: white;">
+                        <div class="flex align-items-center">
+                            Nombre del empleado
+                            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem;background-color:#114C5F;color: white;">
+                        <div class="flex align-items-center">
+                            Nombre del cliente
+                            <p-columnFilter type="text" field="Apellidos" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem;background-color:#114C5F;color: white;">
+                        <div class="flex align-items-center">
+                           Titulo del libro
+                            <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                <ng-template pTemplate="header">
+                                    <div class="px-3 pt-3 pb-0">
+                                        <span class="font-bold">Agent Picker</span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-multiSelect [ngModel]="value" placeholder="Any"  optionLabel="name">
+                                        <ng-template let-option pTemplate="item">
+                                            <div class="inline-block vertical-align-middle">
+                                                <span class="ml-1 mt-1">{{ option.name }}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:10rem;background-color:#114C5F;color: white;">
+                        <div class="flex align-items-center">
+                            Fecha
+                            <p-columnFilter type="text" field="Telefono" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="background-color:#114C5F;color: white;width: 8rem;">
+                        <div class="flex align-items-center" style="text-align: center;">
+                            Cantidad
+                            <p-columnFilter type="text" field="tipo_persona" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:10rem;background-color:#114C5F;color: white;">
+                      <div class="flex align-items-center" >
+                         Opciones
+                      </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-venta>
+                <tr>
+                    <td>
+                        {{venta.empleado_id}}
+                    </td>
+                    <td>
+                        <span class="ml-1 vertical-align-middle">{{venta.cliente_id}}</span>
+                    </td>
+                    <td>
+                        <span class="ml-1 vertical-align-middle">{{venta.libro_id}}</span>
+                    </td>
+                    <td style="text-align: center;">
+                        {{venta.created_at | date:'short'}}
+                    </td>
+                    <td style="text-align: center;">
+                      {{venta.cantidad}}
+                    </td>
+                    <td style="text-align: center;">
+                      <p-button (click)="sidebarVisible = true;valor = 'modificar'; updateData(venta)"  icon="pi pi-user-edit" [style]="{'height': '30px', 'width': '30px', 'margin-right':'20px'}"></p-button>
+                      <p-button (click)="confirm2($event)" icon="pi pi-times" [style]="{'height': '30px', 'width': '30px'}" severity="danger"></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6">No hay clientes registrados</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <!-- Side bar modificar -->
+    <div class="card flex justify-content-center" >
+      <p-sidebar [(visible)]="sidebarVisible" [style]="{'width': '20rem', 'background-image':'url(\'./../../assets/fondo6.jpg\')', 'background-size':'cover'}">
+        <div *ngIf="valor == 'modificar'; else Agregar">
+          <h3 style="text-align: center;margin-bottom: 30px;">Modifique sus datos</h3>
+          <form action="modificar" [formGroup]="venta">
+            <span class="p-float-label">
+              <input pInputText id="nombre_empleado" formControlName="empleado_id" />
+              <label for="nombre_empleado">Nombre empleado</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="nombre_cliente" formControlName="cliente_id"/>
+              <label for="nombre_cliente">Nombre cliente</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="titulo"  formControlName="libro_id"/>
+              <label for="titulo">Titulo</label>
+            </span>
+            <span>
+              <p-inputNumber  formControlName="cantidad" [size]="9"  [min]="0" [max]="100" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="vertical"  decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" ></p-inputNumber>
+            </span>
+              <button  pButton pRipple label="Modificar"  class="p-button-success"></button>
+          </form>
+
+        </div>
+        <ng-template #Agregar>
+          <h3 style="text-align: center;margin-bottom: 30px;">Inserte los datos</h3>
+          <form action="modificar"  [formGroup]="venta">
+            <span class="p-float-label">
+              <input pInputText id="nombre_empleado"  formControlName="empleado_id" />
+              <label for="nombre_empleado">Nombre empleado</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="nombre_cliente"  formControlName="cliente_id"/>
+              <label for="nombre_cliente">Nombre cliente</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="titulo"  formControlName="libro_id"/>
+              <label for="titulo">Titulo</label>
+            </span>
+            <span>
+              <p-inputNumber  formControlName="cantidad" [size]="9"  [min]="0" [max]="100" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="vertical"  decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" ></p-inputNumber>
+            </span>
+            <button  pButton pRipple label="Agregar" class="p-button-success"></button>
+
+          </form>
+
+        </ng-template>
+
+
+
+      </p-sidebar>
+    </div>
+
+
+    <!-- Confirmar el eliminar -->
+    <div class="card flex justify-content-center gap-2">
+      <p-toast></p-toast>
+      <p-confirmPopup></p-confirmPopup>
+    </div>
+
+ </div>
