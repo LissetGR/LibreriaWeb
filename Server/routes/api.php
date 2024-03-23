@@ -26,6 +26,10 @@ Route::prefix('auth')->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
     //ventas
     Route::get('getVentas',[VentasController::class,'getVentas'])->name('ventas.listar');
+    Route::delete('destroyVenta',[VentasController::class,'destroy']);
+    Route::post('createVenta',[VentasController::class,'create']);
+    Route::put('modificarVenta',[VentasController::class,'modificar']);
+    Route::get('getVentasFilter',[VentasController::class,'buscarVentas']);
 
     // libros
     Route::get('getRecomendados',[LibrosController::class,'getRecomendados'])->name('libros.listar');
@@ -33,7 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('createLibro',[LibrosController::class,'create']);
     Route::put('modificarLibro',[LibrosController::class,'modificar']);
     Route::delete('destroyLibro',[LibrosController::class,'destroy']);
-    Route::get('getLibros',[LibrosController::class,'getLibros']); Route::delete('destroyLibro',[LibrosController::class,'destroy']);
+    Route::get('getLibros',[LibrosController::class,'getLibros']);
     Route::get('getByIdLibro',[LibrosController::class,'getById']);
 
     // user

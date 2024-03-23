@@ -5,7 +5,6 @@ export interface venta{
   cantidad:number,
   cliente_id:string,
   created_at:Date,
-  updated_at:Date
 }
 
 

@@ -16,10 +16,11 @@ class VentaResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'empleado_id'=>$this->user->name,
-            'cliente_id'=>$this->user->name,
+            'empleado_id' =>$this->empleado->name,
+            'cliente_id'=>$this->cliente->name,
             'libro_id'=>$this->libro->titulo,
             'cantidad'=>$this->cantidad,
-        ];
+            'created_at'=>$this->created_at
+         ];
     }
 }

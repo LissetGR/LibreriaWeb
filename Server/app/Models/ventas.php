@@ -12,14 +12,14 @@ class ventas extends Model
     protected $fillable=['libro_id', 'empleado_id','cliente_id','cantidad'];
 
     public function libro(){
-        return $this->belonsTo(libros::class);
+        return $this->belongsTo(libros::class);
     }
 
-    public function userClient(){
-        return $this->belongsTo(User::class);
+    public function cliente(){
+        return $this->belongsTo(User::class, 'cliente_id');
     }
 
-    public function userEmploy(){
-        return $this->belongsTo(User::class);
+    public function empleado(){
+        return $this->belongsTo(User::class, 'empleado_id');
     }
 }

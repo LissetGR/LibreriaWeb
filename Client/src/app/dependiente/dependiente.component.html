@@ -27,7 +27,7 @@
                     <button pButton pRipple label="Agregar venta" class="p-button-primary" icon="pi pi-plus" (click)="valor = 'agregar';sidebarVisible = true; clearData()"></button>
                     <span class="p-input-icon-left ml-auto" style="margin-right: 30PX;display: flex;">
                         <i class="pi pi-search" style="margin-top: -8px;"></i>
-                        <input pInputText type="text"  placeholder="Buscar" style="height: 35px;"/>
+                        <input pInputText type="text"  placeholder="Buscar" style="height: 35px;" [(ngModel)]="cadena" (keypress)="buscarVenta()"/>
                     </span>
                     <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" ></button>
                 </div>
@@ -101,11 +101,11 @@
                         {{venta.created_at | date:'short'}}
                     </td>
                     <td style="text-align: center;">
-                      {{venta.cantidad}}
+                        {{venta.cantidad}}
                     </td>
                     <td style="text-align: center;">
                       <p-button (click)="sidebarVisible = true;valor = 'modificar'; updateData(venta)"  icon="pi pi-user-edit" [style]="{'height': '30px', 'width': '30px', 'margin-right':'20px'}"></p-button>
-                      <p-button (click)="confirm2($event)" icon="pi pi-times" [style]="{'height': '30px', 'width': '30px'}" severity="danger"></p-button>
+                      <p-button (click)="confirm2($event,venta.id)" icon="pi pi-times" [style]="{'height': '30px', 'width': '30px'}" severity="danger"></p-button>
                     </td>
                 </tr>
             </ng-template>
@@ -138,7 +138,7 @@
             <span>
               <p-inputNumber  formControlName="cantidad" [size]="9"  [min]="0" [max]="100" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="vertical"  decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" ></p-inputNumber>
             </span>
-              <button  pButton pRipple label="Modificar"  class="p-button-success"></button>
+              <button  pButton pRipple label="Modificar"  class="p-button-success"  (click)="modificar()"></button>
           </form>
 
         </div>
@@ -158,9 +158,9 @@
               <label for="titulo">Titulo</label>
             </span>
             <span>
-              <p-inputNumber  formControlName="cantidad" [size]="9"  [min]="0" [max]="100" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="vertical"  decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" ></p-inputNumber>
+              <p-inputNumber  formControlName="cantidad" [size]="9"  [min]="0" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="vertical"  decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" ></p-inputNumber>
             </span>
-            <button  pButton pRipple label="Agregar" class="p-button-success"></button>
+            <button  pButton pRipple label="Agregar" class="p-button-success" (click)="agregarVenta()"></button>
 
           </form>
 

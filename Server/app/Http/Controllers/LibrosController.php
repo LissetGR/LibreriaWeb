@@ -140,7 +140,7 @@ class LibrosController extends Controller
 
         $libros = Libros::whereRaw('LOWER(titulo) LIKE ?', ['%' . $cadena . '%'])
                         ->orwhereRaw('LOWER(autor) LIKE ?', ['%' . $cadena . '%'])
-                        // ->orwhereRaw('LOWER(ISBN) LIKE ?', ['%' . $cadena . '%'])
+                        ->orwhereRaw('ISBN LIKE ?', ['%' . $cadena . '%'])
                         ->orwhereRaw('LOWER(tipo) LIKE ?', ['%' . $cadena . '%'])
                         ->orwhereRaw('LOWER(tema) LIKE ?', ['%' . $cadena . '%'])
                         ->get();
@@ -148,3 +148,5 @@ class LibrosController extends Controller
             return response()->json($libros);
     }
 }
+
+

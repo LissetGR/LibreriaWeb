@@ -107,4 +107,13 @@ export class AuthService {
 
        return this.http.put<Usuario>(this.url+'modificarUser', user ,  {headers})
      }
+
+     public getUser(){
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      });
+
+      return this.http.get<Usuario[]>(this.url+"getUser", {headers})
+    }
+
 }

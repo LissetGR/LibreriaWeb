@@ -73,7 +73,7 @@ export class AdminComponent {
       }
     );
 
-    this.servicio.getUser().subscribe(
+    this.authService.getUser().subscribe(
       (response) => {
         this.usuarios = response;
       },
@@ -201,10 +201,10 @@ export class AdminComponent {
     });
   }
 
-  public delete(libro: number) {
-    this.servicio.deleteLibro(libro).subscribe(
+  public delete(libroP: number) {
+    this.servicio.deleteLibro(libroP).subscribe(
       (response) => {
-        this.libros.splice(this.libros.indexOf(response), 1);
+        this.libros.splice(this.libros.findIndex(libro => libro.id === libroP), 1);
         this.messageService.add({
           severity: 'success',
           summary: 'Confirmado',
